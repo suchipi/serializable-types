@@ -1,13 +1,14 @@
 /* @flow */
-export type TypeWrapper<Name: string, Serialized> = {
-  $type: Name,
-  $value: Serialized,
+export type SerializationWrapper<SerializedValueType> = {
+  $type: string,
+  $value: SerializedValueType,
 };
 
-export type TypeDef<T = any, Name: string = string, Serialized = any> = {
-  name: Name,
-  niceName?: string,
-  check(val: T): boolean,
-  serialize(val: T): TypeWrapper<Name, Serialized>,
-  deserialize(serialized: TypeWrapper<Name, Serialized>): T,
+export type TypeDef<ValueType, SerializedValueType = ValueType> = {
+  description: string,
+  serializedDescription: string,
+  check(val: any): boolean,
+  serialize(val: ValueType): SerializationWrapper<SerializedValueType>,
+  checkSerialized(serialized: SerializationWrapper<any>): boolean,
+  deserialize(serialized: SerializationWrapper<SerializedValueType>): ValueType,
 };

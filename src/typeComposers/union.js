@@ -1,32 +1,38 @@
 /* @flow */
-import type { TypeDef, TypeWrapper } from "../TypeDef";
+import type { TypeDef } from "../TypeDef";
+import type { DecoratedTypeDef } from "../decorateTypeDef";
+const assertType = require("../assertType");
+const decorateTypeDef = require("../decorateTypeDef");
 
-module.exports = function union(...typeDefs: Array<TypeDef<>>): TypeDef<> {
-  return {
-    name: "union",
-    niceName: typeDefs.map((typeDef) => typeDef.name).join(" | "),
+module.exports = function union(
+  ...typeDefs: Array<TypeDef<any>>
+): DecoratedTypeDef<any> {
+  return decorateTypeDef({
+    description: typeDefs.map((typeDef) => typeDef.description).join(" | "),
+    serializedDescription: typeDefs
+      .map((typeDef) => typeDef.serializedDescription)
+      .join(" | "),
     check(val) {
       return typeDefs.some((typeDef) => typeDef.check(val));
     },
     serialize(val) {
-      let serialized = val;
-      typeDefs.forEach((typeDef) => {
-        if (typeDef.check(val)) {
-          serialized = typeDef.serialize(val);
-        }
-      });
-      return serialized;
+      const defToSerializeWith = typeDefs.find((typeDef) => typeDef.check(val));
+      if (defToSerializeWith == null) {
+        throw assertType.makeError(this.description, val);
+      }
+      return defToSerializeWith.serialize(val);
+    },
+    checkSerialized(serialized) {
+      return typeDefs.some((typeDef) => typeDef.checkSerialized(serialized));
     },
     deserialize(serialized) {
-      let deserialized;
-      typeDefs.forEach((typeDef) => {
-        // All names for different types in a union must be unique, otherwise
-        // this won't work.
-        if (serialized.$type === typeDef.name) {
-          deserialized = typeDef.deserialize(serialized);
-        }
-      });
-      return deserialized;
+      const defToDeserializeWith = typeDefs.find((typeDef) =>
+        typeDef.checkSerialized(serialized)
+      );
+      if (defToDeserializeWith == null) {
+        throw assertType.makeError(this.serializedDescription, serialized);
+      }
+      return defToDeserializeWith.deserialize(serialized);
     },
-  };
+  });
 };

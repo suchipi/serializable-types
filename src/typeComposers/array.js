@@ -1,16 +1,19 @@
 /* @flow */
-import type { TypeDef, TypeWrapper } from "../TypeDef";
+import type { TypeDef, SerializationWrapper } from "../TypeDef";
+import type { DecoratedTypeDef } from "../decorateTypeDef";
+const decorateTypeDef = require("../decorateTypeDef");
 
-module.exports = function array<MemberT, MemberName: string, MemberSerialized>(
-  memberDef: TypeDef<MemberT, MemberName, MemberSerialized>
-): TypeDef<
+module.exports = function array<MemberT, MemberSerialized>(
+  memberDef: TypeDef<MemberT, MemberSerialized>
+): DecoratedTypeDef<
   Array<MemberT>,
-  "array",
-  Array<TypeWrapper<MemberName, MemberSerialized>>
+  Array<SerializationWrapper<MemberSerialized>>
 > {
-  return {
-    name: "array",
-    niceName: `Array<${memberDef.niceName || memberDef.name}>`,
+  return decorateTypeDef({
+    description: `Array<${memberDef.description}>`,
+    serializedDescription: `{ $type: "array", $value: Array<${
+      memberDef.serializedDescription
+    }> }`,
     check(val) {
       return (
         Array.isArray(val) && val.every((member) => memberDef.check(member))
@@ -22,10 +25,18 @@ module.exports = function array<MemberT, MemberName: string, MemberSerialized>(
         $value: array.map((member) => memberDef.serialize(member)),
       };
     },
+    checkSerialized(serialized) {
+      return (
+        serialized.$type === "array" &&
+        serialized.$value.every((serializedMember) =>
+          memberDef.checkSerialized(serializedMember)
+        )
+      );
+    },
     deserialize(serialized) {
       return serialized.$value.map((serializedValue) => {
         return memberDef.deserialize(serializedValue);
       });
     },
-  };
+  });
 };

@@ -8,6 +8,7 @@ module.exports = {
   null: require("./null"),
   number: require("./number"),
   string: require("./string"),
+  Symbol: require("./Symbol"),
   Uint8Array: require("./Uint8Array"),
   undefined: require("./undefined"),
   URL: require("./URL"),
