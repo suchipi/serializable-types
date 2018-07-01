@@ -1,5 +1,6 @@
 /* @flow */
 import type { TypeDef } from "./TypeDef";
+const prettyFormat = require("pretty-format");
 
 function assertType(value: any, typeDef: TypeDef<any>) {
   if (!typeDef.check(value)) {
@@ -8,11 +9,9 @@ function assertType(value: any, typeDef: TypeDef<any>) {
 }
 
 assertType.makeError = function makeError(description: string, value: any) {
-  let stringified = value;
-  try {
-    stringified = JSON.stringify(value, null, 2);
-  } catch (err) {}
-  return new TypeError(`Expected ${description}, but received ${stringified}`);
+  return new TypeError(
+    `Expected ${description}, but received ${prettyFormat(value)}`
+  );
 };
 
 module.exports = assertType;
