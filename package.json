@@ -6,6 +6,17 @@
   "repository": "https://github.com/suchipi/serializable-types",
   "author": "Suchipi <me@suchipi.com>",
   "license": "MIT",
+  "keywords": [
+    "types",
+    "checking",
+    "serialize",
+    "serializer",
+    "serialization",
+    "deserialize",
+    "deserializer",
+    "deserialization",
+    "json"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",
     "@babel/core": "^7.0.0-beta.51",
