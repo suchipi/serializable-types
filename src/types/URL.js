@@ -1,7 +1,8 @@
 /* @flow */
 import type { TypeDef } from "../TypeDef";
 const decorateTypeDef = require("../decorateTypeDef");
-const URL = global.URL || require("url").URL;
+// Use eval("require") so webpack doesn't bundle the `url` module
+const URL = global.URL || eval("require")("url").URL;
 
 module.exports = decorateTypeDef(
   ({

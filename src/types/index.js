@@ -5,6 +5,7 @@ module.exports = {
   boolean: require("./boolean"),
   Buffer: require("./Buffer"),
   Date: require("./Date"),
+  Element: require("./Element"),
   Error: require("./Error"),
   false: require("./false"),
   integer: require("./integer"),
