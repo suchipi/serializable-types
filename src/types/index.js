@@ -6,6 +6,7 @@ module.exports = {
   Date: require("./Date"),
   Error: require("./Error"),
   integer: require("./integer"),
+  NaN: require("./NaN"),
   null: require("./null"),
   number: require("./number"),
   RegExp: require("./RegExp"),
