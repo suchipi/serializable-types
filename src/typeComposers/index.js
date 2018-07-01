@@ -2,6 +2,7 @@
 
 module.exports = {
   array: require("./array"),
+  intersection: require("./intersection"),
   maybe: require("./maybe"),
   object: require("./object"),
   objectMap: require("./objectMap"),
