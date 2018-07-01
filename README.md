@@ -130,7 +130,7 @@ interface Type {
   // If the given object cannot be deserialized into this type, an error will be thrown.
   deserialize(serialized: Object): any;
 
-  // Assert that a given value is of this type. Like `check`, but it throws an error if the value is now of this type.
+  // Assert that a given value is of this type. Like `check`, but it throws an error if the value is not of this type.
   assert(val: any): void;
 }
 ```
