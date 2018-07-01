@@ -1,7 +1,7 @@
 /* @flow */
 import type { TypeDef } from "../TypeDef";
 const decorateTypeDef = require("../decorateTypeDef");
-const Buffer = global.Buffer || require("buffer").Buffer;
+const Buffer = require("buffer").Buffer;
 
 module.exports = decorateTypeDef(
   ({
