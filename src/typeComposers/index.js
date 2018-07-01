@@ -2,6 +2,7 @@
 
 module.exports = {
   array: require("./array"),
+  exactString: require("./exactString"),
   intersection: require("./intersection"),
   map: require("./map"),
   maybe: require("./maybe"),
