@@ -7,6 +7,7 @@ module.exports = {
   integer: require("./integer"),
   null: require("./null"),
   number: require("./number"),
+  RegExp: require("./RegExp"),
   string: require("./string"),
   Symbol: require("./Symbol"),
   Uint8Array: require("./Uint8Array"),
