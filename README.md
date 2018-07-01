@@ -135,7 +135,7 @@ interface Type {
 }
 ```
 
-Further API documentation forthcoming.
+Further API documentation forthcoming, but in the meantime you can try it out on [RunKit](https://npm.runkit.com/serializable-types)
 
 ## License
 
