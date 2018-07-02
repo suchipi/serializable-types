@@ -1,41 +1,51 @@
 /* @flow */
-import type { TypeDef } from "../TypeDef";
+import type { TypeDef, SerializationWrapper } from "../TypeDef";
 const decorateTypeDef = require("../decorateTypeDef");
 
 type SerializedElement = {
   element: { tagName: string, namespaceURI: ?string },
   attributes: Array<{ namespaceURI: ?string, name: string, value: string }>,
-  children: Array<SerializedElement>,
+  children: Array<
+    SerializationWrapper<SerializedElement> | SerializationWrapper<string>
+  >,
 };
 
-// TODO: only copies child elements, not child nodes, so text nodes are lost
 module.exports = decorateTypeDef(
   ({
-    description: "Element",
+    description: "Element | TextNode",
     serializedDescription:
-      '{ $type: "Element", $value: { element: { tagName: string, namespaceURI: ?string }, attributes: Array<{ namespaceURI: ?string, name: string, value: string }>, innerHTML: string } }',
+      '{ $type: "Node", $value: string | { element: { tagName: string, namespaceURI: ?string }, attributes: Array<{ namespaceURI: ?string, name: string, value: string }>, children: Array } }',
     check(val) {
-      return val instanceof Element;
+      return (
+        val instanceof global.Node && (val.nodeType === 1 || val.nodeType === 3)
+      );
     },
-    serialize(element: Element) {
-      return {
-        $type: "Element",
-        $value: {
-          element: {
-            tagName: element.tagName,
-            namespaceURI: element.namespaceURI,
+    serialize(node) {
+      if (node instanceof Element) {
+        return {
+          $type: "Element",
+          $value: {
+            element: {
+              tagName: node.tagName,
+              namespaceURI: node.namespaceURI,
+            },
+            attributes: Array.from(node.attributes).map(
+              ({ namespaceURI, name, value }) => ({ namespaceURI, name, value })
+            ),
+            children: Array.from(node.childNodes).map((child) =>
+              this.serialize(child)
+            ),
           },
-          attributes: Array.from(element.attributes).map(
-            ({ namespaceURI, name, value }) => ({ namespaceURI, name, value })
-          ),
-          children: Array.from(element.children).map((child) =>
-            this.serialize(child)
-          ),
-        },
-      };
+        };
+      } else {
+        return {
+          $type: "TextNode",
+          $value: node.nodeValue,
+        };
+      }
     },
     checkSerialized(serialized) {
-      return serialized.$type === "Element";
+      return serialized.$type === "Element" || serialized.$type === "Node";
     },
     deserialize(serialized) {
       const document = global.document;
@@ -44,22 +54,26 @@ module.exports = decorateTypeDef(
           "Cannot deserialize an Element without a global document in scope"
         );
       }
-      const { element, attributes, children } = serialized.$value;
-      let el;
-      if (element.namespaceURI != null) {
-        el = document.createElementNS(element.namespaceURI, element.tagName);
+      if (typeof serialized.$value === "string") {
+        return document.createTextNode(serialized.$value);
       } else {
-        el = document.createElement(element.tagName);
-      }
-      attributes.forEach(({ namespaceURI, name, value }) => {
-        if (namespaceURI != null) {
-          el.setAttributeNS(namespaceURI, name, value);
+        const { element, attributes, children } = serialized.$value;
+        let el;
+        if (element.namespaceURI != null) {
+          el = document.createElementNS(element.namespaceURI, element.tagName);
         } else {
-          el.setAttribute(name, value);
+          el = document.createElement(element.tagName);
         }
-      });
-      children.forEach((child) => el.appendChild(this.deserialize(child)));
-      return el;
+        attributes.forEach(({ namespaceURI, name, value }) => {
+          if (namespaceURI != null) {
+            el.setAttributeNS(namespaceURI, name, value);
+          } else {
+            el.setAttribute(name, value);
+          }
+        });
+        children.forEach((child) => el.appendChild(this.deserialize(child)));
+        return el;
+      }
     },
-  }: TypeDef<Element, SerializedElement>)
+  }: TypeDef<Element | Node, SerializedElement | string>)
 );
