@@ -14,7 +14,7 @@ module.exports = decorateTypeDef(
   ({
     description: "Element | TextNode",
     serializedDescription:
-      '{ $type: "Node", $value: string | { element: { tagName: string, namespaceURI: ?string }, attributes: Array<{ namespaceURI: ?string, name: string, value: string }>, children: Array } }',
+      '{ $type: "TextNode", $value: string } | { $type: "Element", $value: { element: { tagName: string, namespaceURI: ?string }, attributes: Array<{ namespaceURI: ?string, name: string, value: string }>, children: Array } }',
     check(val) {
       return (
         val instanceof global.Node && (val.nodeType === 1 || val.nodeType === 3)
