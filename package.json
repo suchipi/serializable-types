@@ -26,6 +26,8 @@
     "babel-eslint": "^8.2.5",
     "babel-jest": "^23.2.0",
     "babel-loader": "^7.1.4",
+    "buble": "0.19.4",
+    "docz": "^0.12.5",
     "eslint": "^5.0.1",
     "eslint-config-unobtrusive": "^1.2.2",
     "eslint-plugin-flowtype": "^2.49.3",

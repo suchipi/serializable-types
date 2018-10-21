@@ -1,0 +1,140 @@
+---
+route: /
+order: 1
+---
+
+# serializable-types
+
+`serializable-types` is a combination type checker and value (de)serializer for node and the browser.
+
+It's kind of like [`prop-types`](https://npm.im/prop-types), [`flow-runtime`](https://npm.im/flow-runtime), or [`ow`](https://npm.im/ow), but it can use its type awareness to serialize and deserialize values into JSON-safe objects, kinda like [`ejson`](https://npm.im/ejson).
+
+Here's a code example:
+
+```js
+import types from "serializable-types";
+
+// --------------
+// Checking types
+// --------------
+
+types.boolean.check(true); // true
+types.boolean.check(42); // false
+
+types.number.check(42); // true
+types.number.check(true); // false
+
+types.array(types.boolean).check([true, false, true]); // true
+
+types
+  .object({
+    foo: types.number,
+    bar: types.tuple(types.string, types.number),
+    baz: types.array(types.union(types.Date, types.Buffer)),
+  })
+  .check({
+    foo: 42,
+    bar: ["hi", 65],
+    baz: [new Date(), Buffer.from("bla bla"), new Date()],
+  });
+// true
+
+// ---------------
+// Asserting types
+// ---------------
+
+types.boolean.assert(true); // No error
+types.boolean.assert(42); // TypeError: Expected boolean, but received 42​​
+
+types.array(types.boolean).assert([true, false, null]);
+// TypeError: ​​Expected Array<boolean>, but received: [ true, false, null ]
+
+types
+  .object({
+    foo: types.number,
+    bar: types.tuple(types.string, types.number),
+    baz: types.array(types.union(types.Date, types.Buffer)),
+  })
+  .assert({
+    bad: true,
+  });
+// TypeError: Expected { foo: number, bar: [string, number], baz: Array<Date | Buffer> }, but received: { "bad" : true }
+
+// ----------------------------------
+// Serializing values of a given type
+// ----------------------------------
+
+types.Buffer.serialize(Buffer.from("hello"));
+// { $type: "Buffer", $value: [104, 101, 108, 108, 111] }
+
+types
+  .object({
+    data: types.union(types.Buffer, types.string),
+    encoding: types.string,
+  })
+  .serialize({
+    data: Buffer.from([104, 101, 108, 108, 111]),
+    encoding: "utf-8",
+  });
+// {
+//   $type: "object",
+//   $value: {
+//     data: {
+//       $type: "Buffer",
+//       $value: [104, 101, 108, 108, 111],
+//     },
+//     encoding: { $type: "string", $value: "utf-8" },
+//   },
+// }
+
+// ------------------------------------
+// Deserializing values of a known type
+// ------------------------------------
+
+types
+  .object({
+    data: types.union(types.Buffer, types.string),
+    encoding: types.string,
+  })
+  .deserialize({
+    $type: "object",
+    $value: {
+      data: {
+        $type: "Buffer",
+        $value: [104, 101, 108, 108, 111],
+      },
+      encoding: { $type: "string", $value: "utf-8" },
+    },
+  });
+// { data: <Buffer 68 65 6c 6c 6f>, encoding: "utf-8" }
+```
+
+Try it out on [RunKit](https://npm.runkit.com/serializable-types):
+
+import RunKit from "./RunKit";
+
+<RunKit>
+{`const types = require("serializable-types");
+
+const userType = types.object({
+  id: types.string,
+  username: types.string,
+  level: types.number,
+  friends: types.array(types.string),
+  bans: types.maybe(types.array(types.string)),
+});
+
+const user = {
+  id: "abcdef1234567890",
+  username: "suchipi",
+  level: 52,
+  friends: [],
+};
+
+userType.check(user);
+`}
+</RunKit>
+
+import NextButton from "./NextButton";
+
+<NextButton href="/api">Next: API</NextButton>
