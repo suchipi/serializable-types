@@ -5,3 +5,7 @@ src
 .prettierrc
 yarn-error.log
 .DS_Store
+docs
+doczrc.js
+webpack.config.js
+.flowconfig
