@@ -149,6 +149,7 @@ Here is a list of all the `TypeDef`s:
 - `types.Element`
 - `types.Error`
 - `types.false`
+- `types.Function`
 - `types.integer`
 - `types.NaN`
 - `types.null`
@@ -208,6 +209,10 @@ A `TypeDef` which represents an [`Error`](https://developer.mozilla.org/en-US/do
 ### `types.false`
 
 A `TypeDef` which represents the value `false`.
+
+### `types.Function`
+
+A `TypeDef` which represents a `Function`. Note that functions cannot be (de)serialized.
 
 ### `types.integer`
 

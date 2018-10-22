@@ -8,6 +8,7 @@ module.exports = {
   Element: require("./Element"),
   Error: require("./Error"),
   false: require("./false"),
+  Function: require("./Function"),
   integer: require("./integer"),
   NaN: require("./NaN"),
   null: require("./null"),
