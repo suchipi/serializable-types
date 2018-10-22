@@ -1,7 +1,7 @@
 // doczrc.js
 export default {
   title: "serializable-types",
-  indexHtml: "docs/index.html",
+  indexHtml: "docs_src/index.html",
   themeConfig: {
     colors: {
       primary: "rgb(206, 92, 0)",

@@ -42,7 +42,8 @@
   "scripts": {
     "build": "rm -rf dist && babel src --out-dir dist",
     "build:watch": "rm -rf dist && babel --watch src --out-dir dist",
-    "client": "webpack-dev-server --mode development"
+    "client": "webpack-dev-server --mode development",
+    "build-docs": "docz build; rm -rf docs; mv .docz/dist docs"
   },
   "dependencies": {
     "pretty-format": "^23.2.0"
