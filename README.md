@@ -150,8 +150,10 @@ Here is a list of all the `TypeDef`s:
 - `types.Error`
 - `types.false`
 - `types.Function`
+- `types.Infinity`
 - `types.integer`
 - `types.NaN`
+- `types.NegativeInfinity`
 - `types.null`
 - `types.number`
 - `types.RegExp`
@@ -214,6 +216,10 @@ A `TypeDef` which represents the value `false`.
 
 A `TypeDef` which represents a `Function`. Note that functions cannot be (de)serialized.
 
+### `types.Infinity`
+
+A `TypeDef` which represents the value `Infinity`.
+
 ### `types.integer`
 
 A `TypeDef` which represents integers.
@@ -222,13 +228,17 @@ A `TypeDef` which represents integers.
 
 A `TypeDef` which represents the value `NaN`.
 
+### `types.NegativeInfinity`
+
+A `TypeDef` which represents the value `-Infinity`.
+
 ### `types.null`
 
 A `TypeDef` which represents the value `null`.
 
 ### `types.number`
 
-A `TypeDef` which represents all numbers except `NaN`.
+A `TypeDef` which represents all numbers except `NaN`, `Infinity`, and `-Infinity`.
 
 ### `types.RegExp`
 
