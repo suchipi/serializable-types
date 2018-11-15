@@ -19,6 +19,7 @@ module.exports = function tuple(
       return (
         val != null &&
         typeof val === "object" &&
+        memberDefs.length === val.length &&
         memberDefs.every((typeDef, index) => typeDef.check(val[index]))
       );
     },
@@ -35,6 +36,7 @@ module.exports = function tuple(
     checkSerialized(serialized) {
       return (
         serialized.$type === "tuple" &&
+        serialized.$value.length === memberDefs.length &&
         serialized.$value.every((serializedValue, index) => {
           const typeDef = memberDefs[index];
           return typeDef.checkSerialized(serializedValue);
