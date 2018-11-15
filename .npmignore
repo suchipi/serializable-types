@@ -6,6 +6,9 @@ src
 yarn-error.log
 .DS_Store
 docs
+docs_src
 doczrc.js
 webpack.config.js
 .flowconfig
+.docz
+*.test.js
