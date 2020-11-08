@@ -16,7 +16,7 @@ import * as t from "serializable-types";
 t.isOfType(42, t.number); // true
 t.isOfType(42, t.boolean); // false
 t.isOfType(true, t.boolean); // true
-t.isOfType(true, t.number); // true
+t.isOfType(true, t.number); // false
 
 t.isOfType([1, 2, 3], t.array(t.number)); // true
 
