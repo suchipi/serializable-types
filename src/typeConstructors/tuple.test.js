@@ -5,7 +5,6 @@ test("tuple", () => {
   expect(t.check([1])).toBe(false);
   expect(t.check([1, "hi"])).toBe(true);
   expect(t.check([1, 1])).toBe(false);
-
   expect(() => {
     t.serialize([1]);
   }).toThrowErrorMatchingInlineSnapshot(`
@@ -14,13 +13,11 @@ test("tuple", () => {
 ]"
 `);
 });
-
 test("union of tuples", () => {
   const t = types.union(
     types.tuple(types.number),
     types.tuple(types.number, types.maybe(types.number))
   );
-
   expect(t.serialize([1])).toMatchInlineSnapshot(`
 Object {
   "$type": "tuple",
@@ -32,7 +29,6 @@ Object {
   ],
 }
 `);
-
   expect(t.serialize([1, 2])).toMatchInlineSnapshot(`
 Object {
   "$type": "tuple",
@@ -48,7 +44,6 @@ Object {
   ],
 }
 `);
-
   expect(t.serialize([1, undefined])).toMatchInlineSnapshot(`
 Object {
   "$type": "tuple",
@@ -64,7 +59,6 @@ Object {
   ],
 }
 `);
-
   expect(() => t.deserialize(t.serialize([1]))).not.toThrowError();
   expect(() => t.deserialize(t.serialize([1, 2]))).not.toThrowError();
   expect(() => t.deserialize(t.serialize([1, undefined]))).not.toThrowError();

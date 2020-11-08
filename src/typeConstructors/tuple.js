@@ -1,16 +1,8 @@
-/* @flow */
-import type { TypeDef } from "../TypeDef";
-import type { DecoratedTypeDef } from "../decorateTypeDef";
-const decorateTypeDef = require("../decorateTypeDef");
-
-module.exports = function tuple(
-  ...memberDefs: Array<TypeDef<any>>
-): DecoratedTypeDef<any> {
-  return decorateTypeDef({
+module.exports = function tuple(...memberDefs) {
+  return {
     description: `[${memberDefs
       .map((typeDef) => typeDef.description)
       .join(", ")}]`,
-
     serializedDescription: `[${memberDefs
       .map((typeDef) => typeDef.description)
       .join(", ")}]`,
@@ -50,5 +42,5 @@ module.exports = function tuple(
         return typeDef.deserialize(serializedValue);
       });
     },
-  });
+  };
 };

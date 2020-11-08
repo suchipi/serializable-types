@@ -1,20 +1,6 @@
-/* @flow */
-import type { TypeDef, SerializationWrapper } from "../TypeDef";
-import type { DecoratedTypeDef } from "../decorateTypeDef";
-const decorateTypeDef = require("../decorateTypeDef");
-
-module.exports = function map<KeyT, KeySerialized, ValueT, ValueSerialized>(
-  keyDef: TypeDef<KeyT, KeySerialized>,
-  valueDef: TypeDef<ValueT, ValueSerialized>
-): DecoratedTypeDef<
-  Map<KeyT, ValueT>,
-  Array<
-    [SerializationWrapper<KeySerialized>, SerializationWrapper<ValueSerialized>]
-  >
-> {
-  return decorateTypeDef({
+module.exports = function map(keyDef, valueDef) {
+  return {
     description: `Map<${keyDef.description}, ${valueDef.description}>`,
-
     serializedDescription: `{ $type: "Map", $value: Array<[${
       keyDef.serializedDescription
     }, ${valueDef.serializedDescription}]> }`,
@@ -59,5 +45,5 @@ module.exports = function map<KeyT, KeySerialized, ValueT, ValueSerialized>(
       });
       return map;
     },
-  });
+  };
 };

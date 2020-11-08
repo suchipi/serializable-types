@@ -1,16 +1,12 @@
-/* @flow */
-import type { TypeDef } from "../TypeDef";
-import type { DecoratedTypeDef } from "../decorateTypeDef";
-const decorateTypeDef = require("../decorateTypeDef");
 const union = require("./union");
 const stringDef = require("../types/string");
 const symbolDef = require("../types/Symbol");
 
-module.exports = function objectMap<Key, Value>(
-  valueType: TypeDef<Value, any>,
-  keyType: TypeDef<Key> = union(stringDef, symbolDef)
-): DecoratedTypeDef<{ [key: Key]: Value }, Array<[any, any]>> {
-  return decorateTypeDef({
+module.exports = function objectMap(
+  valueType,
+  keyType = union(stringDef, symbolDef)
+) {
+  return {
     description: `{ [${keyType.description}]: ${valueType.description} }`,
     serializedDescription: `{ $type: "objectMap", $value: Array<[${
       keyType.description
@@ -29,11 +25,9 @@ module.exports = function objectMap<Key, Value>(
     serialize(obj) {
       return {
         $type: "objectMap",
-        $value: ((Object.entries(obj): any): Array<[Key, Value]>).map(
-          ([key, val]) => {
-            return [keyType.serialize(key), valueType.serialize(val)];
-          }
-        ),
+        $value: Object.entries(obj).map(([key, val]) => {
+          return [keyType.serialize(key), valueType.serialize(val)];
+        }),
       };
     },
 
@@ -49,7 +43,7 @@ module.exports = function objectMap<Key, Value>(
     },
 
     deserialize(serialized) {
-      const obj: { [key: Key]: Value } = {};
+      const obj = {};
       serialized.$value.forEach(([serializedKey, serializedValue]) => {
         const key = keyType.deserialize(serializedKey);
         const val = valueType.deserialize(serializedValue);
@@ -57,5 +51,5 @@ module.exports = function objectMap<Key, Value>(
       });
       return obj;
     },
-  });
+  };
 };

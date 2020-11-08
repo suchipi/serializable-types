@@ -1,7 +1,15 @@
-/* @flow */
-const baseTypes = require("./types");
-const typeComposers = require("./typeComposers");
+const types = require("./types");
+const { coercingTypeConstructors } = require("./coercion");
+const apiFunctions = require("./apiFunctions");
+const installGlobals = require("./installGlobals");
 
-const types = Object.assign({}, baseTypes, typeComposers);
+const serializableTypes = Object.assign(
+  {
+    installGlobals,
+  },
+  types,
+  coercingTypeConstructors,
+  apiFunctions
+);
 
-module.exports = types;
+module.exports = serializableTypes;

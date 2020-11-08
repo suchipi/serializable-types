@@ -1,7 +1,7 @@
-/* @flow */
 const makeTypedArrayDef = require("./makeTypedArrayDef");
 
 module.exports = {
+  anyObject: require("./anyObject"),
   boolean: require("./boolean"),
   Buffer: require("./Buffer"),
   Date: require("./Date"),
@@ -13,6 +13,7 @@ module.exports = {
   integer: require("./integer"),
   NaN: require("./NaN"),
   NegativeInfinity: require("./NegativeInfinity"),
+  never: require("./never"),
   null: require("./null"),
   number: require("./number"),
   RegExp: require("./RegExp"),

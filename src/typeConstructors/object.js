@@ -1,20 +1,9 @@
-/* @flow */
-import type { TypeDef, SerializationWrapper } from "../TypeDef";
-import type { DecoratedTypeDef } from "../decorateTypeDef";
-const decorateTypeDef = require("../decorateTypeDef");
-
-module.exports = function object(
-  objectDef: Object
-): DecoratedTypeDef<Object, Object> {
-  const entries = ((Object.entries(objectDef): any): Array<
-    [string, TypeDef<any>]
-  >);
-
-  return decorateTypeDef({
+module.exports = function object(objectDef) {
+  const entries = Object.entries(objectDef);
+  return {
     description: `{ ${entries
       .map(([key, typeDef]) => `${key}: ${typeDef.description}`)
       .join(", ")} }`,
-
     serializedDescription: `{ $type: "object", $value: { ${entries
       .map(([key, typeDef]) => `${key}: ${typeDef.serializedDescription}`)
       .join(", ")} } }`,
@@ -32,7 +21,10 @@ module.exports = function object(
       entries.forEach(([key, typeDef]) => {
         value[key] = typeDef.serialize(obj[key]);
       });
-      return { $type: "object", $value: value };
+      return {
+        $type: "object",
+        $value: value,
+      };
     },
 
     checkSerialized(serialized) {
@@ -40,10 +32,7 @@ module.exports = function object(
         return false;
       }
 
-      const serializedEntries = ((Object.entries(
-        serialized.$value
-      ): any): Array<[string, SerializationWrapper<any>]>);
-
+      const serializedEntries = Object.entries(serialized.$value);
       return serializedEntries.every(
         ([key, serializedValue]) =>
           objectDef[key] && objectDef[key].checkSerialized(serializedValue)
@@ -57,5 +46,5 @@ module.exports = function object(
       });
       return value;
     },
-  });
+  };
 };

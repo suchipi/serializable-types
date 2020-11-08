@@ -1,14 +1,6 @@
-/* @flow */
-import type { TypeDef } from "../TypeDef";
-import type { DecoratedTypeDef } from "../decorateTypeDef";
-const decorateTypeDef = require("../decorateTypeDef");
-
-module.exports = function intersection(
-  ...typeDefs: Array<TypeDef<any>>
-): DecoratedTypeDef<any> {
-  return decorateTypeDef({
+module.exports = function intersection(...typeDefs) {
+  return {
     description: typeDefs.map((typeDef) => typeDef.description).join(" & "),
-
     serializedDescription: `{ $type: "intersection", $value: [ ${typeDefs
       .map((typeDef) => typeDef.serializedDescription)
       .join(", ")} ] }`,
@@ -35,7 +27,6 @@ module.exports = function intersection(
 
     deserialize(serialized) {
       let val;
-
       typeDefs.forEach((typeDef, index) => {
         if (typeof val === "undefined") {
           val = typeDef.deserialize(serialized.$value[index]);
@@ -43,8 +34,7 @@ module.exports = function intersection(
           Object.assign(val, typeDef.deserialize(serialized.$value[index]));
         }
       });
-
       return val;
     },
-  });
+  };
 };
