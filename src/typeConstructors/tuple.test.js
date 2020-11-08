@@ -6,7 +6,7 @@ test("tuple", () => {
   expect(t.check([1, "hi"])).toBe(true);
   expect(t.check([1, 1])).toBe(false);
   expect(() => {
-    t.serialize([1]);
+    types.serializeWithType([1], t);
   }).toThrowErrorMatchingInlineSnapshot(`
 "Expected [number, string], but received Array [
   1,

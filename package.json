@@ -38,7 +38,7 @@
     "webpack-dev-server": "^3.1.4"
   },
   "scripts": {
-    "build": "rm -rf dist && babel src --out-dir dist",
+    "build": "rm -rf dist && babel src --out-dir dist --ignore '**/*.test.js'",
     "build:watch": "rm -rf dist && babel --watch src --out-dir dist",
     "client": "webpack-dev-server --mode development"
   },
