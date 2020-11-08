@@ -1,23 +1,27 @@
-const booleanDef = require("./boolean");
+const typeDef = require("./boolean");
 
 test("boolean", () => {
-  expect(booleanDef.check(true)).toBe(true);
-  expect(booleanDef.check(false)).toBe(true);
-  expect(booleanDef.check(42)).toBe(false);
-  expect(booleanDef.serialize(true)).toEqual({
+  expect(typeDef.check(true)).toBe(true);
+  expect(typeDef.check(false)).toBe(true);
+
+  expect(typeDef.check(42)).toBe(false);
+
+  expect(typeDef.serialize(true)).toEqual({
     $type: "boolean",
     $value: true,
   });
+
   expect(
-    booleanDef.checkSerialized({
+    typeDef.checkSerialized({
       $type: "boolean",
       $value: true,
     })
   ).toBe(true);
+
   expect(
-    booleanDef.deserialize({
+    typeDef.deserialize({
       $type: "boolean",
-      $value: true,
+      $value: false,
     })
-  ).toBe(true);
+  ).toBe(false);
 });
