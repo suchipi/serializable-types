@@ -2,7 +2,7 @@
 
 `serializable-types` is a combination runtime type checker and value (de)serializer for node and the browser.
 
-It's kind of like [`prop-types.](https://npm.im/prop-types), [`flow-runtime`](https://npm.im/flow-runtime), or [`ow`](https://npm.im/ow), but it can use its type awareness to serialize and deserialize values into JSON-safe objects, kinda like [`ejson`](https://npm.im/ejson).
+It's kind of like [`prop-types`](https://npm.im/prop-types), [`flow-runtime`](https://npm.im/flow-runtime), or [`ow`](https://npm.im/ow), but it can use its type awareness to serialize and deserialize values into JSON-safe objects, kinda like [`ejson`](https://npm.im/ejson).
 
 ## Code Example
 
@@ -191,7 +191,7 @@ Here is a list of all the `TypeDef` constructors:
 - `t.tuple(...memberTypeDefs)`
 - `t.union(...memberTypeDefs)`
 
-And here is a list of all the functions you use to work with `TypeDef`s:
+And here is a list of all the utility functions:
 
 - `t.assertType(value, typeDef)`
 - `t.isOfType(value, typeDef)`
