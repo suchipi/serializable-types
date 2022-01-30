@@ -198,6 +198,7 @@ And here is a list of all the utility functions:
 - `t.serializeWithType(value, typeDef)`
 - `t.deserializeWithType(serialized, typeDef)`
 - `t.installGlobals()`
+- `t.coerceToType(value)`
 
 Each export is documented in further detail below.
 

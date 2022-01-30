@@ -8,6 +8,7 @@ module.exports = {
   Element: require("./Element"),
   Error: require("./Error"),
   false: require("./false"),
+  false_: require("./false"), // for TS
   Function: require("./Function"),
   Infinity: require("./Infinity"),
   integer: require("./integer"),
@@ -15,11 +16,13 @@ module.exports = {
   NegativeInfinity: require("./NegativeInfinity"),
   never: require("./never"),
   null: require("./null"),
+  null_: require("./null"), // for TS
   number: require("./number"),
   RegExp: require("./RegExp"),
   string: require("./string"),
   Symbol: require("./Symbol"),
   true: require("./true"),
+  true_: require("./true"), // for TS
   Int8Array: makeTypedArrayDef(Int8Array),
   Uint8Array: makeTypedArrayDef(Uint8Array),
   Uint8ClampedArray: makeTypedArrayDef(Uint8ClampedArray),
