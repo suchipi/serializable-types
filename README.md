@@ -512,6 +512,13 @@ Some things to note about Automatic `TypeDef` Coercion:
 
 - Array literals are always coerced into tuples; as such, `[String]` refers to a tuple with one element in it, a string. This may not be what you want; if you instead want an Array of any size with consistent items inside, use `t.array(String)`.
 
+To manually coerce a value into a type, you can use `t.coerceToType`:
+
+```js
+t.coerceToType(Boolean); // returns t.boolean
+t.coerceToType("hello"); // returns t.exactString("hello")
+```
+
 ## License
 
 MIT

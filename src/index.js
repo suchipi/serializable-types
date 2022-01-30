@@ -1,15 +1,16 @@
 const types = require("./types");
-const { coercingTypeConstructors } = require("./coercion");
+const { coercingTypeConstructors, coerce } = require("./coercion");
 const apiFunctions = require("./apiFunctions");
 const installGlobals = require("./installGlobals");
 
 const serializableTypes = Object.assign(
   {
     installGlobals,
+    coerceToType: coerce,
   },
   types,
   coercingTypeConstructors,
-  apiFunctions
+  apiFunctions,
 );
 
 module.exports = serializableTypes;
