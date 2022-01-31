@@ -1,6 +1,7 @@
 const makeTypedArrayDef = require("./makeTypedArrayDef");
 
 module.exports = {
+  any: require("./any"),
   anyObject: require("./anyObject"),
   boolean: require("./boolean"),
   Buffer: require("./Buffer"),

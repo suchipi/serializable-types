@@ -142,6 +142,7 @@ interface TypeDef {
 
 Here is a list of all the `TypeDef`s:
 
+- `t.any`
 - `t.anyObject`
 - `t.boolean`
 - `t.Buffer`
@@ -240,6 +241,10 @@ Makes several exports from this library global:
 Not all `TypeDefs` are exported
 
 ## API: `TypeDef`s
+
+### `t.any`
+
+A `TypeDef` which represents anything. Cannot be used for serialization/deserialization, but can be used for runtime type-checking.
 
 ### `t.anyObject`
 

@@ -12,6 +12,7 @@ export type TypeDef<T> = {
 const global: typeof globalThis = dummy;
 
 // `TypeDef`s
+export const any: TypeDef<any> = dummy;
 export const anyObject: TypeDef<{}> = dummy;
 export const boolean: TypeDef<boolean> = dummy;
 export const Buffer: TypeDef<typeof global.Buffer> = dummy;
