@@ -1,6 +1,6 @@
 {
   "name": "serializable-types",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Runtime type assertion and serialization system",
   "main": "dist/index.js",
   "repository": "https://github.com/suchipi/serializable-types",
