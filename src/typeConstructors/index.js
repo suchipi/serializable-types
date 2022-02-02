@@ -10,6 +10,7 @@ module.exports = {
   maybe: require("./maybe"),
   object: require("./object"),
   objectMap: require("./objectMap"),
+  predicate: require("./predicate"),
   set: require("./set"),
   shape: require("./shape"),
   stringMatching: require("./stringMatching"),

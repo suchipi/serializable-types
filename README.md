@@ -187,6 +187,7 @@ Here is a list of all the `TypeDef` constructors:
 - `t.maybe(typeDef)`
 - `t.object(typeDefObjectMap)`
 - `t.objectMap(valueTypeDef, keyTypeDef)`
+- `t.predicate(matcherFunction)`
 - `t.set(memberTypeDef)`
 - `t.shape(typeDefObjectMap)`
 - `t.stringMatching(regex)`
@@ -438,6 +439,10 @@ Note that the value `TypeDef` is the first argument and the key `TypeDef` is the
 t.objectMap(t.number);
 // This is similar to `{ [string | Symbol]: number }` in Flow/TypeScript.
 ```
+
+### `t.predicate(matcherFunction)`
+
+A function that returns a `TypeDef` which represents any value for which the provided `matcherFunction` returns true. You can use this to create TypeDefs that conform to any user-defined bounds. However, be aware that a TypeDef returned from `t.predicate` cannot be used for (de)serialization; it can only be used for runtime type checking.
 
 ### `t.set(memberTypeDef)`
 

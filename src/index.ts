@@ -95,6 +95,10 @@ interface _objectMap {
 }
 export const objectMap: _objectMap = dummy;
 
+export const predicate: (
+  matcherFunction: (input: any) => boolean
+) => TypeDef<any> = dummy;
+
 export const set: <T>(memberTypeDef: TypeDef<T>) => TypeDef<Set<T>> = dummy;
 
 export const shape: <O extends {}>(
