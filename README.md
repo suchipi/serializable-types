@@ -177,6 +177,7 @@ Here is a list of all the `TypeDef`s:
 Here is a list of all the `TypeDef` constructors:
 
 - `t.array(memberTypeDef)`
+- `t.arrayContaining(memberTypeDef)`
 - `t.exactNumber(num)`
 - `t.exactString(str)`
 - `t.func(params, returnValue)`
@@ -339,6 +340,10 @@ A `TypeDef` which represents a WHATWG [`URL`](https://developer.mozilla.org/en-U
 ### `t.array(memberTypeDef)`
 
 A function which returns a `TypeDef` which represents a homogenous Array of the given type; for example, `t.array(t.boolean)` represents an Array of unbounded length containing only booleans. This is like `Array<boolean>` in Flow/TypeScript.
+
+### `t.arrayContaining(memberTypeDef)`
+
+A function which returns a `TypeDef` which represents an Array containing at least one of the given type; for example, `t.arrayContaining(t.string)` represents an Array of undetermined length containing at least one string. This is like `Array<string | any>` in Flow/TypeScript.
 
 ### `t.exactNumber(num)`
 

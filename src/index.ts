@@ -51,6 +51,10 @@ export const array = <T extends CoercableToTypeDef>(
   member: T
 ): TypeDef<Array<Unwrap<T>>> => dummy;
 
+export const arrayContaining = <T extends CoercableToTypeDef>(
+  member: T
+): TypeDef<Array<T | any>> => dummy;
+
 export const exactNumber: <T extends number>(num: T) => TypeDef<T> = dummy;
 
 export const exactString: <T extends string>(str: T) => TypeDef<T> = dummy;
@@ -155,6 +159,7 @@ export type CoercableToTypeDef =
   | typeof global.String
   | typeof global.Number
   | typeof global.Boolean
+  | typeof global.Array
   | string
   | number
   | Array<any>
@@ -181,7 +186,8 @@ type DoCoerceToTypeDef<V> =
   V extends typeof global.String ? typeof string :
   V extends typeof global.Number ? typeof number :
   V extends typeof global.Boolean ? typeof boolean :
-  V extends string ? TypeDef<V> : // exactStirng
+  V extends typeof global.Array ? TypeDef<Array<any>> :
+  V extends string ? TypeDef<V> : // exactString
   V extends number ? TypeDef<V> : // exactNumber
   V extends Array<any> ? TypeDef<Array<any>> : // tuple
   V extends Function ? TypeDef<never> :

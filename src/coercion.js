@@ -13,6 +13,7 @@ const decoratedTypeDefType = typeConstructors.object({
 
 const coercingTypeConstructors = {
   array: (member) => typeConstructors.array(coerce(member)),
+  arrayContaining: (member) => typeConstructors.arrayContaining(coerce(member)),
   exactNumber: typeConstructors.exactNumber,
   exactString: typeConstructors.exactString,
   func: (params, returnValue) =>
@@ -83,6 +84,8 @@ function coerce(value) {
     return types.number;
   } else if (value === Boolean) {
     return types.boolean;
+  } else if (value === Array) {
+    return typeConstructors.array(types.any);
   } else if (typeof value === "string") {
     return typeConstructors.exactString(value);
   } else if (typeof value === "number") {

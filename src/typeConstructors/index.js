@@ -1,5 +1,6 @@
 module.exports = {
   array: require("./array"),
+  arrayContaining: require("./arrayContaining"),
   exactNumber: require("./exactNumber"),
   exactString: require("./exactString"),
   func: require("./func"),
