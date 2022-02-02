@@ -12,6 +12,7 @@ module.exports = {
   objectMap: require("./objectMap"),
   set: require("./set"),
   shape: require("./shape"),
+  stringMatching: require("./stringMatching"),
   symbolFor: require("./symbolFor"),
   tuple: require("./tuple"),
   union: require("./union"),

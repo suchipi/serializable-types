@@ -38,6 +38,7 @@ const coercingTypeConstructors = {
         Object.entries(defObj).map(([key, value]) => [key, coerce(value)])
       )
     ),
+  stringMatching: typeConstructors.stringMatching,
   symbolFor: typeConstructors.symbolFor,
   tuple: (...members) => typeConstructors.tuple(...members.map(coerce)),
   union: (...members) => typeConstructors.union(...members.map(coerce)),

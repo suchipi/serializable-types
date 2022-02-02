@@ -101,6 +101,8 @@ export const shape: <O extends {}>(
   typeDefObjectMap: O
 ) => TypeDef<Partial<{ [K in keyof O]: UnwrapTypeDef<O[K]> }>> = dummy;
 
+export const stringMatching: (regex: RegExp) => TypeDef<string> = dummy;
+
 export const symbolFor: (tag: string) => TypeDef<symbol> = dummy;
 
 export const tuple: (

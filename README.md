@@ -189,6 +189,7 @@ Here is a list of all the `TypeDef` constructors:
 - `t.objectMap(valueTypeDef, keyTypeDef)`
 - `t.set(memberTypeDef)`
 - `t.shape(typeDefObjectMap)`
+- `t.stringMatching(regex)`
 - `t.symbolFor(tag)`
 - `t.tuple(...memberTypeDefs)`
 - `t.union(...memberTypeDefs)`
@@ -445,6 +446,10 @@ A function which returns a `TypeDef` which represents a [`Set`](https://develope
 ### `t.shape(typeDefObjectMap)`
 
 A function which is the same as `t.object` but all of the object properties in the returned `TypeDef` are wrapped with `t.maybe`. This is similar to `$Shape` in Flow, and is useful for config options, React Props, etc.
+
+### `t.stringMatching(regex)`
+
+A function which returns a `TypeDef` which represents any string that matches the provided regular expression.
 
 ### `t.symbolFor(tag)`
 
